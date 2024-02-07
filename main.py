@@ -3,6 +3,7 @@ from discord.ext import commands
 import requests as r 
 import os
 
+
 PREFIX = "!"
 BANNED_WORDS = [
 	"pizza hawaii",
