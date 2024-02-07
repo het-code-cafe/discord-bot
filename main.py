@@ -23,8 +23,6 @@ UNFORGIVABLE_WORDS = [
 intents = discord.Intents.default()
 intents.members = True
 
-# Instantieer bot
-# client = discord.Client(intents=intents)
 client = commands.Bot(intents=intents, command_prefix=PREFIX)
 
 @client.event
@@ -44,6 +42,30 @@ async def kat(context):
 		await context.message.reply(f"You have been blessed with a cat gif 🙏 {msg}")
 		return	
 	await context.message.reply(msg)
+
+@client.command()
+async def panda(context):
+    req = r.get("https://some-random-api.ml/img/panda/")
+    res = req.json()
+    await context.message.reply(res["link"])
+
+@client.command()
+async def bird(context):
+    req = r.get("https://some-random-api.ml/img/birb/")
+    res = req.json()
+    await context.message.reply(res["link"])
+
+@client.command()
+async def fox(context):
+    req = r.get("https://randomfox.ca/floof/")
+    res = req.json()
+    await context.message.reply(res["image"])
+
+@client.command()
+async def duck(context):
+    req = r.get("https://random-d.uk/api/random")
+    res = req.json()
+    await context.message.reply(res["url"])
 
 @client.command()
 async def koffie(context):
@@ -110,5 +132,4 @@ async def on_message(message):
 	await client.process_commands(message) 
 
 
-# Run ik de bot
 client.run(os.getenv("TOKEN"))
