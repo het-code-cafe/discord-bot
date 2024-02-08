@@ -52,6 +52,12 @@ async def panda(context):
     await context.message.reply(res["link"])
 
 @client.command()
+async def woof(context):
+    req = r.get("https://random.dog/woof.json")
+    res = req.json()
+    await context.message.reply(res["url"])
+
+@client.command()
 async def bird(context):
     req = r.get("https://some-random-api.ml/img/birb/")
     res = req.json()
