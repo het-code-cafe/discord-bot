@@ -23,6 +23,7 @@ UNFORGIVABLE_WORDS = [
 
 intents = discord.Intents.default()
 intents.members = True
+intents.message_content = True
 
 client = commands.Bot(intents=intents, command_prefix=PREFIX)
 
