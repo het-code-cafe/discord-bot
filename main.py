@@ -21,7 +21,7 @@ UNFORGIVABLE_WORDS = [
 	"emacs is beter dan vim"
 ]
 
-intents = discord.Intents.all()
+intents = discord.Intents.default()
 intents.members = True
 
 client = commands.Bot(intents=intents, command_prefix=PREFIX)
