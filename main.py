@@ -1,11 +1,13 @@
 import random
 
-import discord, asyncio
+import discord, asyncio, os
 from discord.ext import commands
-import requests as r 
-import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 client = commands.Bot(command_prefix=os.getenv("PREFIX"), intents=discord.Intents.all())
+client.remove_command("help")
 
 """
 
@@ -13,7 +15,6 @@ client = commands.Bot(command_prefix=os.getenv("PREFIX"), intents=discord.Intent
 	This will allow for a more custom help command that will be able to display the help command in a more user-friendly way.
 
 """
-client.remove_command('help')
 
 async def load_cogs():
     for folder in os.listdir("./cogs"):
@@ -27,7 +28,6 @@ async def load_cogs():
                     print(f"[+] {filename} loaded")
                 except Exception as e:
                     print(f"[-] {filename} failed to load\n[->]{e}")
-        print("")
 
 async def main():
     async with client:
