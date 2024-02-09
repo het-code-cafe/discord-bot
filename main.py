@@ -1,3 +1,5 @@
+import random
+
 import discord
 from discord.ext import commands
 import requests as r 
@@ -74,6 +76,13 @@ async def duck(context):
     req = r.get("https://random-d.uk/api/random")
     res = req.json()
     await context.message.reply(res["url"])
+
+@client.command()
+async def bunny(context):
+	media_type = "gif" if random.random() < 0.5 else "mp4"
+	url = f"https://api.bunnies.io/v2/loop/random/redirect/?media={media_type}"
+	response = r.get(url)
+	await context.message.reply(response.url)
 
 @client.command()
 async def koffie(context):
