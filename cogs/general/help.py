@@ -1,5 +1,4 @@
-import discord
-import json
+import discord, json
 from discord.ext import commands
 
 class Help(commands.Cog):
