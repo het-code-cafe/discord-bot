@@ -15,11 +15,11 @@ class Troll(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def mock(ctx, *argument):
+    async def mock(ctx, *text):
         """
             Get mocked thru mockingspongebob.org
         """
-        arg = "_".join(argument)
+        arg = "_".join(text)
         embed = discord.Embed(title="You got mocked!", color=0xFF5733)
         embed.set_image(url=f"https://mockingspongebob.org/{arg}.jpg")
         await ctx.send(embed=embed)

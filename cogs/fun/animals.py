@@ -20,7 +20,7 @@ class Animals(commands.Cog):
             embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command(aliases=["panda", "pandie"])
+    @commands.command(aliases=["pandie"])
     async def panda(self, ctx):
         """
             Gets a random panda image from some-random-api.ml
@@ -64,7 +64,7 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command(aliases=["bunny", "rabbit"])
+    @commands.command(aliases=["rabbit"])
     async def bunny(self, ctx):
         """
             Gets a random bunny image from api.bunnies.io
@@ -90,13 +90,13 @@ class Animals(commands.Cog):
         
     #? Pokemon is not an animal but it fits the theme. Agreed?
     @commands.command(aliases=["poke", "pkmn", "pokémon", "pokèmon"])
-    async def pokemon(self, ctx, *argument):
+    async def pokemon(self, ctx, *pokemon):
         """
             Gets a random pokemon image from pokeapi.co
         """                
-        req = requests.get(f"https://pokeapi.co/api/v2/pokemon/{argument[0].lower()}").json()
-        embed = discord.Embed(title=f"🐾 {argument[0].capitalize()} for you!", color=0xFF5733)
-        embed.add_field(name="Name", value=argument[0].capitalize(), inline=True)
+        req = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon[0].lower()}").json()
+        embed = discord.Embed(title=f"🐾 {pokemon[0].capitalize()} for you!", color=0xFF5733)
+        embed.add_field(name="Name", value=pokemon[0].capitalize(), inline=True)
         embed.add_field(name="Type", value=req.get('types')[0].get('type').get('name').title(), inline=True)
         embed.add_field(name="Health", value=req.get('stats')[0].get('base_stat'), inline=True)
         embed.add_field(name="Attack", value=req.get('stats')[1].get('base_stat'), inline=True)

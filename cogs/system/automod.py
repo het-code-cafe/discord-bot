@@ -14,5 +14,5 @@ class AutoMod(commands.Cog):
         if any(word in message.content for word in self.banned_words):
             await message.delete()
 
-def setup(bot):
-    bot.add_cog(AutoMod(bot))
+async def setup(bot):
+    await bot.add_cog(AutoMod(bot))
