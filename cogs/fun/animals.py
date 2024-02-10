@@ -5,7 +5,7 @@ class Animals(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=["katje", "kitty"])
     async def kat(self, ctx):
         """
             Gets a random cat image from thecatapi.com
@@ -20,7 +20,7 @@ class Animals(commands.Cog):
             embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command()
+    @commands.command(aliases=["panda", "pandie"])
     async def panda(self, ctx):
         """
             Gets a random panda image from some-random-api.ml
@@ -42,7 +42,7 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command()
+    @commands.command(aliases=["foxie", "foxxie"])
     async def fox(self, ctx):
         """
             Gets a random fox image from randomfox.ca
@@ -53,7 +53,7 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command()
+    @commands.command(aliases=["birb", "birdie"])
     async def bird(self, ctx):
         """
             Gets a random bird image from some-random-api.ml
@@ -64,7 +64,7 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command()
+    @commands.command(aliases=["bunny", "rabbit"])
     async def bunny(self, ctx):
         """
             Gets a random bunny image from api.bunnies.io
@@ -76,7 +76,7 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command()
+    @commands.command(aliases=["duckie", "quack"])
     async def duck(self, ctx):
         """
             Gets a random duck image from random-d.uk
@@ -86,6 +86,25 @@ class Animals(commands.Cog):
         embed = discord.Embed(title="🦆 A duck for you!", color=0x000000)
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
-
+        
+        
+    #? Pokemon is not an animal but it fits the theme. Agreed?
+    @commands.command(aliases=["poke", "pkmn", "pokémon", "pokèmon"])
+    async def pokemon(self, ctx, *argument):
+        """
+            Gets a random pokemon image from pokeapi.co
+        """                
+        req = requests.get(f"https://pokeapi.co/api/v2/pokemon/{argument[0].lower()}").json()
+        embed = discord.Embed(title=f"🐾 {argument[0].capitalize()} for you!", color=0xFF5733)
+        embed.add_field(name="Name", value=argument[0].capitalize(), inline=True)
+        embed.add_field(name="Type", value=req.get('types')[0].get('type').get('name').title(), inline=True)
+        embed.add_field(name="Health", value=req.get('stats')[0].get('base_stat'), inline=True)
+        embed.add_field(name="Attack", value=req.get('stats')[1].get('base_stat'), inline=True)
+        embed.add_field(name="Defense", value=req.get('stats')[2].get('base_stat'), inline=True)
+        embed.add_field(name="Special Attack", value=req.get('stats')[3].get('base_stat'), inline=True)
+        embed.add_field(name="Special Defense", value=req.get('stats')[4].get('base_stat'), inline=True)
+        embed.add_field(name="Speed", value=req.get('stats')[5].get('base_stat'), inline=True)
+        await ctx.send(embed=embed)
+    
 async def setup(bot):
     await bot.add_cog(Animals(bot))
