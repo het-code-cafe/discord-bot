@@ -53,16 +53,16 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @commands.command(aliases=["birb", "birdie"])
-    async def bird(self, ctx):
-        """
-            Gets a random bird image from some-random-api.ml
-        """
-        req = requests.get("https://some-random-api.ml/img/birb").json()
-        msg = req["link"]
-        embed = discord.Embed(title="🐦 A bird for you!", color=0x000000)
-        embed.set_image(url=msg)
-        await ctx.send(embed=embed)
+    # @commands.command(aliases=["birb", "birdie"])
+    # async def bird(self, ctx):
+    #     """
+    #         Gets a random bird image from some-random-api.ml
+    #     """
+    #     req = requests.get("https://some-random-api.ml/img/birb").json()
+    #     msg = req["link"] #! Response hier geeft error ("i.some-random-api.ml was successfully registered. There is no content yet.")
+    #     embed = discord.Embed(title="🐦 A bird for you!", color=0x000000)
+    #     embed.set_image(url=msg)
+    #     await ctx.send(embed=embed)
         
     @commands.command(aliases=["rabbit"])
     async def bunny(self, ctx):

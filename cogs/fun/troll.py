@@ -15,7 +15,7 @@ class Troll(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def mock(ctx, *text):
+    async def mock(self, ctx, *text):
         """
             Get mocked thru mockingspongebob.org
         """
