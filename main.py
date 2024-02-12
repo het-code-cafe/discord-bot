@@ -34,7 +34,7 @@ async def main():
         os.system('cls' if os.name == 'nt' else 'clear')
         print("Code-Café's Discord bot is starting...")
         await load_cogs()
-        client.run(os.getenv("TOKEN"))
+        await client.run(os.getenv("TOKEN"))
 
 asyncio.run(main())
 
