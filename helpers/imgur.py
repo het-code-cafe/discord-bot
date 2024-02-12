@@ -1,3 +1,6 @@
+import random, os
+import requests as r
+
 def imgur_search(search_query='panda') -> tuple | None:
     headers = {'Authorization': 'Client-ID ' + os.getenv('IMGUR_API_KEY')}
     url = 'https://api.imgur.com/3/gallery/search/top/?q=' + search_query

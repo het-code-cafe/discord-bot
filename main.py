@@ -6,9 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = commands.Bot(command_prefix=os.getenv("PREFIX"), intents=discord.Intents.all())
-client.remove_command("help")
-
 """
 
 	In a soon-to-be-implemted update, the bot will overwrite the default help command with a custom one. 
@@ -16,25 +13,34 @@ client.remove_command("help")
 
 """
 
-async def load_cogs():
-    for folder in os.listdir("./cogs"):
-        if folder == "__pycache__" or folder == ".git" or folder == "docker":
-            continue
-        print(f"-----------------------------\n[>>] Loading {folder}'s cogs\n-----------------------------")
-        for filename in os.listdir(f"./cogs/{folder}"):
-            if filename.endswith(".py"):
-                try:
-                    await client.load_extension(f"cogs.{folder}.{filename[:-3]}")
-                    print(f"[+] {filename} loaded")
-                except Exception as e:
-                    print(f"[-] {filename} failed to load\n[->]{e}")
+class CCBot(commands.Bot):
+    def __init__(self):
+        intents = discord.Intents.default()
+        intents.members = True
+        intents.message_content = True
 
-async def main():
-    async with client:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print("Code-Café's Discord bot is starting...")
-        await load_cogs()
+        super().__init__(
+                command_prefix=os.getenv("PREFIX"),
+                intents=intents
+            )
 
-asyncio.run(main())
-client.run(os.getenv("TOKEN"))
+        self.remove_command("help")
+
+    async def setup_hook(self):
+        for folder in os.listdir("./cogs"):
+            if folder == "__pycache__" or folder == ".git" or folder == "docker":
+                continue
+            print(f"-----------------------------\n[>>] Loading {folder}'s cogs\n-----------------------------")
+            for filename in os.listdir(f"./cogs/{folder}"):
+                if filename.endswith(".py"):
+                    try:
+                        await self.load_extension(f"cogs.{folder}.{filename[:-3]}")
+                        print(f"[+] {filename} loaded")
+                    except Exception as e:
+                        print(f"[-] {filename} failed to load\n[->]{e}")
+
+
+os.system('cls' if os.name == 'nt' else 'clear')
+print("Code-Café's Discord bot is starting...")
+CCBot().run(os.getenv("TOKEN"))
     
