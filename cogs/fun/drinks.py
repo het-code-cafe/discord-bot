@@ -18,12 +18,12 @@ class Drinks(commands.Cog):
         await ctx.send(embed=embed)
         
     @commands.command()
-    async def monsterenergy(context):
+    async def monsterenergy(self, ctx):
     	res: tuple | None = imgur.imgur_search("monster energy")
     	if res is not None:
     		img, title = res
-    		await context.message.channel.send(title)
-    		await context.message.reply(img)
+    		await ctx.message.channel.send(title)
+    		await ctx.message.reply(img)
 
 async def setup(bot):
     await bot.add_cog(Drinks(bot))

@@ -55,12 +55,12 @@ class Animals(commands.Cog):
         await ctx.send(embed=embed)
         
     @commands.command()
-    async def newpanda(context):
+    async def newpanda(self, ctx):
 	    res: tuple | None = helpers.imgur_search("panda")
 	    if res is not None:
     		img, title = res
-    		await context.message.channel.send(title)
-    		await context.message.reply(img)
+    		await ctx.message.channel.send(title)
+    		await ctx.message.reply(img)
 
     # @commands.command(aliases=["birb", "birdie"])
     # async def bird(self, ctx):
