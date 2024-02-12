@@ -22,8 +22,9 @@ class Drinks(commands.Cog):
     	res: tuple | None = imgur.imgur_search("monster energy")
     	if res is not None:
     		img, title = res
-    		await ctx.message.channel.send(title)
-    		await ctx.message.reply(img)
+            embed = discord.Embed(title=f"🤮 {title} ", color=0x8B4513)
+            embed.set_image(url=img)
+            await ctx.send(embed=embed)
 
 async def setup(bot):
     await bot.add_cog(Drinks(bot))
