@@ -37,33 +37,3 @@ async def main():
 
 asyncio.run(main())
 
-@client.command()
-async def newpanda(context):
-	res: tuple | None = _imgur_search("panda")
-	if res is not None:
-		img, title = res
-		await context.message.channel.send(title)
-		await context.message.reply(img)
-
-@client.command()
-async def monsterenergy(context):
-	res: tuple | None = _imgur_search("monster energy")
-	if res is not None:
-		img, title = res
-		await context.message.channel.send(title)
-		await context.message.reply(img)
-
-def _imgur_search(search_query='panda') -> tuple | None:
-    headers = {'Authorization': 'Client-ID ' + os.getenv('IMGUR_API_KEY')}
-    url = 'https://api.imgur.com/3/gallery/search/top/?q=' + search_query
-    response = r.get(url, headers=headers)
-    data = response.json()
-
-    if response.status_code == 200:
-        imgs = []
-        for item in data['data']:
-            if 'link' in item and 'title' in item:
-                imgs.append((item['link'], item['title']))
-        return random.choice(imgs) if imgs else None
-    return None
-	

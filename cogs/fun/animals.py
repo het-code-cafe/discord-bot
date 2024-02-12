@@ -1,5 +1,6 @@
 import discord, requests, random
 from discord.ext import commands
+from helpers import imgur
 
 class Animals(commands.Cog):
     def __init__(self, bot):
@@ -53,6 +54,14 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
+    @client.command()
+    async def newpanda(context):
+	    res: tuple | None = helpers.imgur_search("panda")
+	    if res is not None:
+    		img, title = res
+    		await context.message.channel.send(title)
+    		await context.message.reply(img)
+
     # @commands.command(aliases=["birb", "birdie"])
     # async def bird(self, ctx):
     #     """

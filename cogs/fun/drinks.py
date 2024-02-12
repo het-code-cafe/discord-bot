@@ -1,5 +1,6 @@
 import discord, requests, random
 from discord.ext import commands
+from helpers import imgur
 
 class Drinks(commands.Cog):
     def __init__(self, bot):
@@ -16,5 +17,13 @@ class Drinks(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
+    @client.command()
+    async def monsterenergy(context):
+    	res: tuple | None = imgur.imgur_search("monster energy")
+    	if res is not None:
+    		img, title = res
+    		await context.message.channel.send(title)
+    		await context.message.reply(img)
+
 async def setup(bot):
     await bot.add_cog(Drinks(bot))
