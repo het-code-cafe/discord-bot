@@ -80,9 +80,8 @@ class Animals(commands.Cog):
         """
         Gets a random bunny image from api.bunnies.io
         """
-        media_type = "gif" if random.random() < 0.5 else "mp4"
         req = requests.get(
-            f"https://api.bunnies.io/v2/loop/random/redirect/?media={media_type}"
+            "https://api.bunnies.io/v2/loop/random/redirect/?media=gif"
         )
         msg = req.url
         embed = discord.Embed(title="🦆 A bunny for you!", color=0x000000)
