@@ -17,7 +17,7 @@ class Drinks(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @client.command()
+    @commands.command()
     async def monsterenergy(context):
     	res: tuple | None = imgur.imgur_search("monster energy")
     	if res is not None:

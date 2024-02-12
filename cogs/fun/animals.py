@@ -54,7 +54,7 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
         
-    @client.command()
+    @commands.command()
     async def newpanda(context):
 	    res: tuple | None = helpers.imgur_search("panda")
 	    if res is not None:
