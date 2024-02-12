@@ -59,9 +59,9 @@ class Animals(commands.Cog):
 	    res: tuple | None = helpers.imgur_search("panda")
 	    if res is not None:
     		img, title = res
-            embed = discord.Embed(title=f"🐼 {title}", color=0x000000)
-            embed.set_image(url=img)
-            await ctx.send(embed=embed)
+            	embed = discord.Embed(title=f"🐼 {title}", color=0x000000)
+            	embed.set_image(url=img)
+            	await ctx.send(embed=embed)
 
     # @commands.command(aliases=["birb", "birdie"])
     # async def bird(self, ctx):
