@@ -1,152 +1,46 @@
 import random
 
-import discord
+import discord, asyncio, os
 from discord.ext import commands
-import requests as r 
-import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+"""
+
+	In a soon-to-be-implemted update, the bot will overwrite the default help command with a custom one. 
+	This will allow for a more custom help command that will be able to display the help command in a more user-friendly way.
+
+"""
+
+class CCBot(commands.Bot):
+    def __init__(self):
+        intents = discord.Intents.default()
+        intents.members = True
+        intents.message_content = True
+
+        super().__init__(
+                command_prefix=os.getenv("PREFIX"),
+                intents=intents
+            )
+
+        self.remove_command("help")
+
+    async def setup_hook(self):
+        for folder in os.listdir("./cogs"):
+            if folder == "__pycache__" or folder == ".git" or folder == "docker":
+                continue
+            print(f"-----------------------------\n[>>] Loading {folder}'s cogs\n-----------------------------")
+            for filename in os.listdir(f"./cogs/{folder}"):
+                if filename.endswith(".py"):
+                    try:
+                        await self.load_extension(f"cogs.{folder}.{filename[:-3]}")
+                        print(f"[+] {filename} loaded")
+                    except Exception as e:
+                        print(f"[-] {filename} failed to load\n[->]{e}")
 
 
-PREFIX = "!"
-BANNED_WORDS = [
-	"pizza hawaii",
-	"pizza hawai",
-	"scriptie",
-	"mark rutte",
-	"marc rutte",
-	"hugo de jonge"
-]
-
-UNFORGIVABLE_WORDS = [
-	"lord of the rings was eigenlijk niet zo'n goede film",
-	"crucio", 
-	"ava kedavra",
-	"emacs is beter dan vim"
-]
-
-intents = discord.Intents.default()
-intents.members = True
-intents.message_content = True
-
-client = commands.Bot(intents=intents, command_prefix=PREFIX)
-
-@client.event
-async def on_ready():
-	print(f"Logged in as {client.user}")
-
-@client.command()
-async def hoi(context):
-	await context.message.reply("Hallo!")
-
-@client.command()
-async def kat(context):
-	req = r.get("https://api.thecatapi.com/v1/images/search")
-	res = req.json()
-	msg = res[0]["url"]
-	if msg.endswith(".gif"):
-		await context.message.reply(f"You have been blessed with a cat gif 🙏 {msg}")
-		return	
-	await context.message.reply(msg)
-
-@client.command()
-async def panda(context):
-    req = r.get("https://some-random-api.ml/img/panda/")
-    res = req.json()
-    await context.message.reply(res["link"])
-
-@client.command()
-async def woof(context):
-    req = r.get("https://random.dog/woof.json")
-    res = req.json()
-    await context.message.reply(res["url"])
-
-@client.command()
-async def bird(context):
-    req = r.get("https://some-random-api.ml/img/birb/")
-    res = req.json()
-    await context.message.reply(res["link"])
-
-@client.command()
-async def fox(context):
-    req = r.get("https://randomfox.ca/floof/")
-    res = req.json()
-    await context.message.reply(res["image"])
-
-@client.command()
-async def duck(context):
-    req = r.get("https://random-d.uk/api/random")
-    res = req.json()
-    await context.message.reply(res["url"])
-
-@client.command()
-async def bunny(context):
-	media_type = "gif" if random.random() < 0.5 else "mp4"
-	url = f"https://api.bunnies.io/v2/loop/random/redirect/?media={media_type}"
-	response = r.get(url)
-	await context.message.reply(response.url)
-
-@client.command()
-async def koffie(context):
-	req = r.get("https://coffee.alexflipnote.dev/random.json")
-	res = req.json()
-	await context.message.reply(res["file"])
-
-@client.command()
-async def testban(context, user: discord.Member):
-	if context.message.author.top_role.name == "Moderator":
-		await context.message.channel.send("Yeet!")
-		await user.ban()
-	else: 
-		await context.message.reply("UNAUTHORIZED")
-
-@client.command()
-async def mock(context, *argument):
-	arg = "_".join(argument)
-	await context.message.reply(f"https://mockingspongebob.org/{arg}.jpg")
-
-@client.command()
-async def poke(context, argument):
-	msg = ""
-
-	req = r.get(f"https://pokeapi.co/api/v2/pokemon/{argument}")
-	res = req.json()
-
-	msg += f"{res['name'].title()}:\n"
-
-	types = res["types"]
-
-	for tp in types:
-		msg += f"Type {tp['slot']}: {tp['type']['name'].title()}\n"
-
-	stats = res["stats"]
-
-	for st in stats:
-		msg += f"{st['stat']['name'].title()}: {st['base_stat']}\n"
-
-	await context.message.reply(msg)
-	
-@client.event
-async def on_member_join(member):
-	guild = member.guild
-	if guild.system_channel is not None:
-		res = f"Welkom {member.mention} in de {guild.name} server!"
-		await guild.system_channel.send(res)
-
-@client.event
-async def on_message(message):
-	if message.author.id == client.user.id:
-		return
-
-	for word in BANNED_WORDS:
-		if word in message.content.lower():
-			await message.delete()
-
-	for word in UNFORGIVABLE_WORDS:
-		if word in message.content.lower():
-			await message.delete()
-			await message.channel.send("Yeet!")
-			await message.author.ban()
-	
-	await client.process_commands(message) 
-
-
-client.run(os.getenv("TOKEN"))
+os.system('cls' if os.name == 'nt' else 'clear')
+print("Code-Café's Discord bot is starting...")
+CCBot().run(os.getenv("TOKEN"))
+    
