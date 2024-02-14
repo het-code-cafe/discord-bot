@@ -18,8 +18,11 @@ class Drinks(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=["monster"])
     async def monsterenergy(self, ctx):
+        """
+        Get a random monster energy image from imgur
+        """
         res: tuple | None = imgur.imgur_search("monster energy")
         if res is not None:
             img, title = res

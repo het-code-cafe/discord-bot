@@ -22,8 +22,8 @@ class Animals(commands.Cog):
             embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=["pandie"])
-    async def panda(self, ctx):
+    @commands.command()
+    async def oldpanda(self, ctx):
         """
         Gets a random panda image from some-random-api.ml
         """
@@ -55,8 +55,11 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    @commands.command()
-    async def newpanda(self, ctx):
+    @commands.command(aliases=["newpanda"])
+    async def panda(self, ctx):
+        """
+        Gets a random panda image from imgur
+        """
         res: tuple | None = helpers.imgur_search("panda")
         if res is not None:
             img, title = res

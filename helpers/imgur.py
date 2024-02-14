@@ -14,4 +14,3 @@ def imgur_search(search_query='panda') -> tuple | None:
                 imgs.append((item['link'], item['title']))
         return random.choice(imgs) if imgs else None
     return None
-	
