@@ -49,7 +49,7 @@ class DynamicHelp(commands.Cog):
 
                 section_name = section_names[page]
                 categories = sections[section_name]
-                new_embed = self._create_section_embed(section_name, categories, page, total_sections, ctx.guild)
+                new_embed = self._create_section_embed(section_name, categories, page, total_sections)
                 await msg.edit(embed=new_embed)
                 await msg.clear_reactions()
                 if total_sections > 1:
