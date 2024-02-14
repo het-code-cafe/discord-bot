@@ -24,7 +24,7 @@ class DynamicHelp(commands.Cog):
         categories = sections[section_name]
 
         # Create embed for the current section
-        embed = self._create_section_embed(section_name, categories, page, total_sections, ctx.guild)
+        embed = self._create_section_embed(section_name, categories, page, total_sections)
         msg = await ctx.send(embed=embed)
 
         # Add navigation reactions if there are multiple sections
@@ -83,7 +83,7 @@ class DynamicHelp(commands.Cog):
 
             section_name = section_names[page]
             categories = sections[section_name]
-            new_embed = self._create_section_embed(section_name, categories, page, total_sections, ctx.guild)
+            new_embed = self._create_section_embed(section_name, categories, page, total_sections)
             await msg.edit(embed=new_embed)
             await msg.clear_reactions()
             if total_sections > 1:
@@ -103,14 +103,12 @@ class DynamicHelp(commands.Cog):
             sections[section][category].append(command)
         return sections
 
-    def _create_section_embed(self, section_name, categories, page, total_sections, guild):
+    def _create_section_embed(self, section_name, categories, page, total_sections):
         """Create an embed for a specific section, listing categories and commands with placeholder arguments."""
         embed = discord.Embed(title=f"Help: {section_name.capitalize()}", description=f"Page {page + 1} of {total_sections}", color=0x00ff00)
         for category, commands in categories.items():
             commands_list = "\n".join([self._format_command_usage(cmd) for cmd in commands])
             embed.add_field(name=category.capitalize(), value=commands_list or "No commands available", inline=True)
-        if guild.icon:
-            embed.set_thumbnail(url=guild.icon_url)
         return embed
 
     def _format_command_usage(self, command):
