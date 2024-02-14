@@ -7,7 +7,7 @@ class Animals(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["katje", "kitty"])
+    @commands.command(aliases=["katje", "kitty", "cat", "catto"])
     async def kat(self, ctx):
         """
         Gets a random cat image from thecatapi.com
