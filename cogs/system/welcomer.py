@@ -14,7 +14,7 @@ class Welcomer(commands.Cog):
         if channel is not None:
             embed = discord.Embed(
                 title="Welkom bij Code-Cafe!",
-                description=f"Leuk dat je er bent {member.mention}! 👋",
+                description=f"Leuk dat je er bent {member.name}! 👋",
                 color=discord.Color.green()
             )
             await channel.send(embed=embed)
