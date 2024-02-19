@@ -1,6 +1,6 @@
 import discord, requests, random
 from discord.ext import commands
-from helpers import imgur
+from helpers.imgur import imgur_search
 
 
 class Animals(commands.Cog):
@@ -60,7 +60,7 @@ class Animals(commands.Cog):
         """
         Gets a random panda image from imgur
         """
-        res: tuple | None = helpers.imgur_search("panda")
+        res: tuple | None = imgur_search("panda")
         if res is not None:
             img, title = res
             embed = discord.Embed(title=f"🐼 {title}", color=0x000000)
