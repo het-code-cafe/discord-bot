@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 
+
 class Welcomer(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -18,6 +19,7 @@ class Welcomer(commands.Cog):
                 color=discord.Color.green()
             )
             await channel.send(embed=embed)
+
 
 async def setup(bot):
     await bot.add_cog(Welcomer(bot))
