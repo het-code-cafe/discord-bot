@@ -1,6 +1,6 @@
 import discord, requests, random
 from discord.ext import commands
-from helpers import imgur
+from helpers.imgur import imgur_search
 
 
 class Drinks(commands.Cog):
@@ -18,9 +18,12 @@ class Drinks(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=["monster"])
     async def monsterenergy(self, ctx):
-        res: tuple | None = imgur.imgur_search("monster energy")
+        """
+        Get a random monster energy image from imgur
+        """
+        res: tuple | None = imgur_search("monster energy")
         if res is not None:
             img, title = res
             embed = discord.Embed(title=f"🤮 {title} ", color=0x8B4513)

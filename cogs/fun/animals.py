@@ -1,13 +1,13 @@
 import discord, requests, random
 from discord.ext import commands
-from helpers import imgur
+from helpers.imgur import imgur_search
 
 
 class Animals(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["katje", "kitty"])
+    @commands.command(aliases=["katje", "kitty", "cat", "catto"])
     async def kat(self, ctx):
         """
         Gets a random cat image from thecatapi.com
@@ -22,8 +22,8 @@ class Animals(commands.Cog):
             embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=["pandie"])
-    async def panda(self, ctx):
+    @commands.command()
+    async def oldpanda(self, ctx):
         """
         Gets a random panda image from some-random-api.ml
         """
@@ -55,9 +55,12 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    @commands.command()
-    async def newpanda(self, ctx):
-        res: tuple | None = helpers.imgur_search("panda")
+    @commands.command(aliases=["newpanda"])
+    async def panda(self, ctx):
+        """
+        Gets a random panda image from imgur
+        """
+        res: tuple | None = imgur_search("panda")
         if res is not None:
             img, title = res
             embed = discord.Embed(title=f"🐼 {title}", color=0x000000)
