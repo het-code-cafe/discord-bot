@@ -34,7 +34,7 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=["doggo", "woof"])
+    @commands.command(aliases=["doggo", "woof", "hond"])
     async def dog(self, ctx):
         """
         Gets a random dog image from thedogapi.com
