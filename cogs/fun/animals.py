@@ -1,6 +1,7 @@
-import discord, requests, random
+import requests
+import discord
 from discord.ext import commands
-from helpers.imgur import imgur_search
+from helpers import imgur
 
 
 class Animals(commands.Cog):
@@ -60,7 +61,7 @@ class Animals(commands.Cog):
         """
         Gets a random panda image from imgur
         """
-        res: tuple | None = imgur_search("panda")
+        res: tuple | None = imgur.imgur_search("panda")
         if res is not None:
             img, title = res
             embed = discord.Embed(title=f"🐼 {title}", color=0x000000)
@@ -73,7 +74,7 @@ class Animals(commands.Cog):
     #         Gets a random bird image from some-random-api.ml
     #     """
     #     req = requests.get("https://some-random-api.ml/img/birb").json()
-    #     msg = req["link"] #! Response hier geeft error ("i.some-random-api.ml was successfully registered. There is no content yet.")
+    #     msg = req["link"]
     #     embed = discord.Embed(title="🐦 A bird for you!", color=0x000000)
     #     embed.set_image(url=msg)
     #     await ctx.send(embed=embed)
