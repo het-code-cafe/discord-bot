@@ -65,13 +65,13 @@ class CCProfanityFilter:
         return profane_words
 
     @staticmethod
-    def read_words_from_file(fpath):
+    def read_words_from_file(fpath) -> list:
         """
         Lees de file met verboden woorden/zinnen uit
         """
         forbidden_words = []
         with open(fpath, 'r') as file:
             for line in file:
-                word = line.strip()
+                word: str = line.strip()
                 forbidden_words.append(word)
         return forbidden_words
