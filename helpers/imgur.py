@@ -1,5 +1,7 @@
-import random, os
+import os
+import random
 import requests as r
+
 
 def imgur_search(search_query='panda') -> tuple | None:
     headers = {'Authorization': 'Client-ID ' + os.getenv('IMGUR_API_KEY')}
@@ -14,4 +16,3 @@ def imgur_search(search_query='panda') -> tuple | None:
                 imgs.append((item['link'], item['title']))
         return random.choice(imgs) if imgs else None
     return None
-	
