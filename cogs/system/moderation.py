@@ -1,10 +1,23 @@
-import discord, requests, random
+import discord
 from discord.ext import commands
+
+from helpers.CCProfanityFilter import CCProfanityFilter
+
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
-    
+        self._bot = bot
+        self._filter = CCProfanityFilter()
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        """
+            Deletes or Bans based off the condition
+        """
+        if self._filter.forbidden(message.content):
+            await message.delete()
+            await message.channel.send(f"{message.author.mention}, dat mag je niet zeggen!")
+
     @commands.command()
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason=None):
@@ -19,7 +32,7 @@ class Moderation(commands.Cog):
         embed.add_field(name="Member", value=member)
         embed.add_field(name="Reason", value=reason)
         await ctx.send(embed=embed)
-    
+
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason=None):
@@ -34,7 +47,7 @@ class Moderation(commands.Cog):
         embed.add_field(name="Member", value=member)
         embed.add_field(name="Reason", value=reason)
         await ctx.send(embed=embed)
-        
+
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def timeout(self, ctx, member: discord.Member, *, reason=None):
