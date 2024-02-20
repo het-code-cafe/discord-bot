@@ -33,6 +33,10 @@ class CCBot(commands.Bot):
                 continue
             print(f"-----------------------------\n[>>] Loading {folder}'s cogs\n-----------------------------")
             for filename in os.listdir(f"./cogs/{folder}"):
+                # Skip initialization files
+                if filename.endswith("__init__.py"):
+                    continue
+
                 if filename.endswith(".py"):
                     try:
                         await self.load_extension(f"cogs.{folder}.{filename[:-3]}")

@@ -3,10 +3,24 @@ import discord
 from discord.ext import commands
 from helpers import imgur
 
+from . import imgur_command
+
 
 class Animals(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(aliases=["birb", "birdie"])
+    async def bird(self, ctx):
+        await imgur_command(ctx, "bird", "🐦")
+
+    @commands.command(aliases=["newpanda"])
+    async def panda(self, ctx):
+        await imgur_command(ctx, "panda", "🐼")
+
+    @commands.command(aliases=["kwal"])
+    async def jellyfish(self, ctx):
+        await imgur_command(ctx, "jellyfish", "🪼", color=0x03dffc)
 
     @commands.command(aliases=["katje", "kitty", "cat", "catto"])
     async def kat(self, ctx):
@@ -55,29 +69,6 @@ class Animals(commands.Cog):
         embed = discord.Embed(title="🦊 A fox for you!", color=0xFF5733)
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
-
-    @commands.command(aliases=["newpanda"])
-    async def panda(self, ctx):
-        """
-        Gets a random panda image from imgur
-        """
-        res: tuple | None = imgur.imgur_search("panda")
-        if res is not None:
-            img, title = res
-            embed = discord.Embed(title=f"🐼 {title}", color=0x000000)
-            embed.set_image(url=img)
-            await ctx.send(embed=embed)
-
-    # @commands.command(aliases=["birb", "birdie"])
-    # async def bird(self, ctx):
-    #     """
-    #         Gets a random bird image from some-random-api.ml
-    #     """
-    #     req = requests.get("https://some-random-api.ml/img/birb").json()
-    #     msg = req["link"]
-    #     embed = discord.Embed(title="🐦 A bird for you!", color=0x000000)
-    #     embed.set_image(url=msg)
-    #     await ctx.send(embed=embed)
 
     @commands.command(aliases=["rabbit"])
     async def bunny(self, ctx):
