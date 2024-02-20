@@ -1,6 +1,5 @@
-import random
-
-import discord, asyncio, os
+import os
+import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -8,10 +7,12 @@ load_dotenv()
 
 """
 
-	In a soon-to-be-implemted update, the bot will overwrite the default help command with a custom one. 
-	This will allow for a more custom help command that will be able to display the help command in a more user-friendly way.
+	In a soon-to-be-implemented update, the bot will overwrite the default help command with a custom one. 
+	This will allow for a more custom help command that will be able to display the 
+	help command in a more user-friendly way.
 
 """
+
 
 class CCBot(commands.Bot):
     def __init__(self):
@@ -20,9 +21,9 @@ class CCBot(commands.Bot):
         intents.message_content = True
 
         super().__init__(
-                command_prefix=os.getenv("PREFIX"),
-                intents=intents
-            )
+            command_prefix=os.getenv("PREFIX"),
+            intents=intents
+        )
 
         self.remove_command("help")
 
@@ -43,4 +44,3 @@ class CCBot(commands.Bot):
 os.system('cls' if os.name == 'nt' else 'clear')
 print("Code-Café's Discord bot is starting...")
 CCBot().run(os.getenv("TOKEN"))
-    
