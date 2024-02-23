@@ -10,6 +10,9 @@ class Drinks(commands.Cog):
 
     @commands.command(aliases=["monster energy"])
     async def monster(self, ctx):
+        """
+        Search monster energy on imgur
+        """
         await imgur_command(ctx, "monster energy", "⚡", color=0x7CB701)
 
     @commands.command(aliases=["bakkie", "coffee"])
