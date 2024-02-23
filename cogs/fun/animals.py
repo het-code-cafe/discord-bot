@@ -12,14 +12,23 @@ class Animals(commands.Cog):
 
     @commands.command(aliases=["birb", "birdie"])
     async def bird(self, ctx):
+        """
+        Search a bird on imgur
+        """
         await imgur_command(ctx, "bird", "🐦")
 
     @commands.command(aliases=["newpanda"])
     async def panda(self, ctx):
+        """
+        Search a panda on imgur
+        """
         await imgur_command(ctx, "panda", "🐼")
 
     @commands.command(aliases=["kwal"])
     async def jellyfish(self, ctx):
+        """
+        Search a jellyfish on imgur
+        """
         await imgur_command(ctx, "jellyfish", "🪼", color=0x03dffc)
 
     @commands.command(aliases=["katje", "kitty", "cat", "catto"])
@@ -94,19 +103,25 @@ class Animals(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
-    # ? Pokemon is not an animal but it fits the theme. Agreed?
     @commands.command(aliases=["poke", "pkmn", "pokémon", "pokèmon"])
     async def pokemon(self, ctx, *pokemon):
         """
         Gets a random pokemon image from pokeapi.co
         """
-        req = requests.get(
-            f"https://pokeapi.co/api/v2/pokemon/{pokemon[0].lower()}"
-        ).json()
+        # Search the Pokémon by ID or name
+        req = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon[0].lower()}").json()
+
+        # Get the species name from the request
+        name = req.get("species").get("name").capitalize()
+
         embed = discord.Embed(
-            title=f"🐾 {pokemon[0].capitalize()} for you!", color=0xFF5733
+            title=f"🐾 {name} for you!", color=0xFF5733
         )
-        embed.add_field(name="Name", value=pokemon[0].capitalize(), inline=True)
+        embed.add_field(
+            name="Name",
+            value=name,
+            inline=True
+        )
         embed.add_field(
             name="Type",
             value=req.get("types")[0].get("type").get("name").title(),
