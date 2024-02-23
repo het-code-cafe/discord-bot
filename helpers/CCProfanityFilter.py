@@ -1,64 +1,37 @@
 """
 CCProfanityFilter.py
 
-Een simpel filter tegen schuttingtaal dat gebruik maakt van de python library profanityfilter in combinatie met
-een lijst verboden woorden en zinnen.
-
-Omdat het filter wel erg agressief is en ongewenste consequenties kan hebben, is er een lijst van geëxcuseerde woorden
-die prioriteit hebben over het filter.
+Verboden woorden en zinnen worden gefilterd. Nederlandse filters zijn bagger.
 
 Gerelateerde files:
 - Resources/forbidden_words.txt
-- Resources/excused.txt
 """
-from profanityfilter import ProfanityFilter
 
 
 class CCProfanityFilter:
 
     def __init__(self):
-        # Lees de geëxcuseerde woorden uit, om te voorkomen dat het filter té enthousiast wordt
-        self._excused: list = CCProfanityFilter.read_words_from_file("Resources/excused_words.txt")
-
         # Lees onze eigen verboden woorden uit, aangezien het begrip van het filter voor het Nederlands beperkt is.
         self._forbidden: list = CCProfanityFilter.read_words_from_file("Resources/forbidden_words.txt")
-
-        # Gebruik een filter uit de profanityfilter lib
-        self._filter: ProfanityFilter = ProfanityFilter(extra_censor_list=self._forbidden)
 
     def forbidden(self, content: str) -> bool:
         """
         Is de content van dit bericht ongepast?
+        (Alleen als het verboden woorden bevat)
         """
-        # Is dit woord geëxcuseerd?
-        if self.__excused(content):
-            return False
+        # Komen er verboden woorden voor?
+        for word in content.split():
+            if word in self._forbidden:
+                # Verboden woord gevonden
+                return True
 
-        # Check het geheel nog eens tegen het filter om gesplitste scheldwoorden etc. te detecteren
-        return self._filter.is_profane(content)
+        # Bevinden zich verboden zinnen in deze content?
+        for forbidden in self._forbidden:
+            if forbidden in content:
+                # Verboden zin gevonden
+                return True
 
-    def __excused(self, text: str) -> bool:
-        # Zoek alle woorden die het filter aanstootgevend vindt
-        profane = self.__find_profane_words(text)
-
-        # Als alle aanstootgevende woorden geëxcuseerd zijn, wordt het bericht zelf geëxcuseerd
-        # (python sets en verzamelingentheorie zijn lit)
-        return set(profane).issubset(set(self._excused))
-
-    def __find_profane_words(self, text: str):
-        """
-        Het filter zelf is vrij agressief en geeft niet aan welke woorden aanstootgevend zijn. Dan kunnen
-        we dus ook niet checken of ze eventueel geëxcuseerd zijn. Dat is stom. Daarom deze workaround,
-        die alle woorden apart bekijkt.
-        """
-        profane_words = []
-
-        # Bekijk elk woord apart
-        for word in text.split():
-            if self._filter.is_profane(word):
-                profane_words.append(word)
-
-        return profane_words
+        return False
 
     @staticmethod
     def read_words_from_file(fpath) -> list:
