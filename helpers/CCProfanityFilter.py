@@ -17,25 +17,21 @@ from profanityfilter import ProfanityFilter
 class CCProfanityFilter:
 
     def __init__(self):
-        # Gebruik een filter uit de profanityfilter lib
-        self._filter: ProfanityFilter = ProfanityFilter(languages=["nl", "en"])
+        # Lees de geëxcuseerde woorden uit, om te voorkomen dat het filter té enthousiast wordt
+        self._excused: list = CCProfanityFilter.read_words_from_file("Resources/excused_words.txt")
 
         # Lees onze eigen verboden woorden uit, aangezien het begrip van het filter voor het Nederlands beperkt is.
         self._forbidden: list = CCProfanityFilter.read_words_from_file("Resources/forbidden_words.txt")
 
-        # Lees de geëxcuseerde woorden uit, om te voorkomen dat het filter té enthousiast wordt
-        self._excused: list = CCProfanityFilter.read_words_from_file("Resources/excused_words.txt")
+        # Gebruik een filter uit de profanityfilter lib
+        self._filter: ProfanityFilter = ProfanityFilter(extra_censor_list=self._forbidden)
 
     def forbidden(self, content: str) -> bool:
         """
         Is de content van dit bericht ongepast?
         """
-        # Bevat dit bericht verboden woorden/zinnen?
-        if any(word in self._forbidden for word in content):
-            return True
-
         # Is dit woord geëxcuseerd?
-        elif self.__excused(content):
+        if self.__excused(content):
             return False
 
         # Check het geheel nog eens tegen het filter om gesplitste scheldwoorden etc. te detecteren
