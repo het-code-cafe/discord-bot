@@ -31,6 +31,20 @@ class Animals(commands.Cog):
         """
         await imgur_command(ctx, "jellyfish", "🪼", color=0x03dffc)
 
+    @commands.command(aliases=["wasbeer", "coon"])
+    async def raccoon(self, ctx):
+        """
+        Search a raccoon on imgur
+        """
+        await imgur_command(ctx, "raccoon", "🦝", color=0x595958)
+
+    @commands.command(aliases=["kikker", "forg"])
+    async def forg(self, ctx):
+        """
+        Search a frog on imgur
+        """
+        await imgur_command(ctx, "frog", "🐸", color=0x5EDD5F)
+
     @commands.command(aliases=["katje", "kitty", "cat", "catto"])
     async def kat(self, ctx):
         """
