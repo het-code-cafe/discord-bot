@@ -1,12 +1,12 @@
 import requests
 import discord
 from discord.ext import commands
-from helpers import imgur
 
-from . import imgur_command
+from . import imgur_command, DISCORD_COLORS
 
 
 class Animals(commands.Cog):
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -15,21 +15,35 @@ class Animals(commands.Cog):
         """
         Search a bird on imgur
         """
-        await imgur_command(ctx, "bird", "🐦")
+        await imgur_command(ctx, "bird", "🐦", color=DISCORD_COLORS['blurple'])
 
     @commands.command(aliases=["newpanda"])
     async def panda(self, ctx):
         """
         Search a panda on imgur
         """
-        await imgur_command(ctx, "panda", "🐼")
+        await imgur_command(ctx, "panda", "🐼", color=DISCORD_COLORS['grey'])
 
     @commands.command(aliases=["kwal"])
     async def jellyfish(self, ctx):
         """
         Search a jellyfish on imgur
         """
-        await imgur_command(ctx, "jellyfish", "🪼", color=0x03dffc)
+        await imgur_command(ctx, "jellyfish", "🪼", color=0x03dffc)  # custom color
+
+    @commands.command(aliases=["kikker", "forg"])
+    async def frog(self, ctx):
+        """
+        Search a frog on imgur
+        """
+        await imgur_command(ctx, search_term="frog", emoji="🐸", color=0x7bde49)  # custom color
+
+    @commands.command(aliases=["wasbeer"])
+    async def raccoon(self, ctx):
+        """
+        Search a raccoon on imgur
+        """
+        await imgur_command(ctx, search_term="raccoon", emoji="🦝", color=DISCORD_COLORS['grey'])
 
     @commands.command(aliases=["katje", "kitty", "cat", "catto"])
     async def kat(self, ctx):
@@ -53,7 +67,7 @@ class Animals(commands.Cog):
         """
         req = requests.get("https://some-random-api.ml/img/panda").json()
         msg = req["link"]
-        embed = discord.Embed(title="🐼 A panda for you!", color=0x000000)
+        embed = discord.Embed(title="🐼 A panda for you!", color=DISCORD_COLORS['green'])
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
@@ -64,7 +78,7 @@ class Animals(commands.Cog):
         """
         req = requests.get("https://api.thedogapi.com/v1/images/search").json()
         msg = req[0]["url"]
-        embed = discord.Embed(title="🐶 Woof! Here's a dog for you!", color=0x8B4513)
+        embed = discord.Embed(title="🐶 Woof! Here's a dog for you!", color=0x8B4513)  # custom color
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
@@ -75,7 +89,7 @@ class Animals(commands.Cog):
         """
         req = requests.get("https://randomfox.ca/floof/").json()
         msg = req["image"]
-        embed = discord.Embed(title="🦊 A fox for you!", color=0xFF5733)
+        embed = discord.Embed(title="🦊 A fox for you!", color=0xFF5733)  # custom color
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
@@ -88,7 +102,7 @@ class Animals(commands.Cog):
             "https://api.bunnies.io/v2/loop/random/redirect/?media=gif"
         )
         msg = req.url
-        embed = discord.Embed(title="🦆 A bunny for you!", color=0x000000)
+        embed = discord.Embed(title="🦆 A bunny for you!", color=DISCORD_COLORS['blurple'])
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
@@ -99,7 +113,7 @@ class Animals(commands.Cog):
         """
         req = requests.get("https://random-d.uk/api/v2/random").json()
         msg = req["url"]
-        embed = discord.Embed(title="🦆 A duck for you!", color=0x000000)
+        embed = discord.Embed(title="🦆 A duck for you!", color=DISCORD_COLORS['yellow'])
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
@@ -147,7 +161,9 @@ class Animals(commands.Cog):
             inline=True,
         )
         embed.add_field(
-            name="Speed", value=req.get("stats")[5].get("base_stat"), inline=True
+            name="Speed",
+            value=req.get("stats")[5].get("base_stat"),
+            inline=True
         )
         await ctx.send(embed=embed)
 

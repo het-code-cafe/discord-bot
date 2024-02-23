@@ -1,6 +1,15 @@
 import discord
 from helpers import imgur
 
+DISCORD_COLORS = {
+    'blurple': 0x5865F2,
+    'green': 0x57F287,
+    'yellow': 0xFEE75C,
+    'fuchsia': 0xEB459E,
+    'red': 0xED4245,
+    'grey': 0x4a4c51
+}
+
 
 async def imgur_command(ctx, search_term: str, emoji: str, color: int = 0x000000):
     img_url, title = imgur.imgur_search(search_term)
