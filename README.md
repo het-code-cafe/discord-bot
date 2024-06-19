@@ -19,3 +19,5 @@ To run the bot, execute the `main.py` file.
 ## License
 
 This project is licensed under the terms of the LICENSE file.
+
+letsgo
