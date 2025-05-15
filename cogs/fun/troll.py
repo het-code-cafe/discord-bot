@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from cogs.fun import imgur_command
+
 
 class Troll(commands.Cog):
     def __init__(self, bot):
@@ -26,6 +28,12 @@ class Troll(commands.Cog):
         embed.set_image(url=f"https://mockingspongebob.org/{arg}.jpg")
         await ctx.send(embed=embed)
 
+    @commands.command(aliases=["shit","schijt","drol"])
+    async def poep(self, ctx):
+        """
+            Sends a random picture of shit
+        """
+        await imgur_command(ctx, "shit", "💩", color=0x8B4513)
 
 async def setup(bot):
     await bot.add_cog(Troll(bot))
