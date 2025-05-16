@@ -26,6 +26,12 @@ class Drinks(commands.Cog):
         embed.set_image(url=msg)
         await ctx.send(embed=embed)
 
+    @commands.command(aliases=["beer","pils"])
+    async def bier(self, ctx):
+        """
+        Get a random picture of a beer
+        """
+        await imgur_command(ctx, "beer", "🍺", color=0xF28E1C)
 
 async def setup(bot):
     await bot.add_cog(Drinks(bot))
