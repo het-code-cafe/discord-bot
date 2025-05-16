@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from cogs.fun import imgur_command
+
 
 class Troll(commands.Cog):
     def __init__(self, bot):

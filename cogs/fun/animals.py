@@ -167,6 +167,10 @@ class Animals(commands.Cog):
         )
         await ctx.send(embed=embed)
 
+    @commands.command()
+    async def pinguin(self, ctx):
+        await imgur_command(ctx, "pinguin", "🐧", color=0x3366FF)
+
 
 async def setup(bot):
     await bot.add_cog(Animals(bot))
